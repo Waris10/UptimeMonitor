@@ -53,7 +53,8 @@ class Monitor extends Model
      */
     public function scopeWithUptime(Builder $query): Builder
     {
-        $window = now()->subDay();
+        $hours = config('monitoring.check.uptime_window_hours');
+        $window = now()->subHours($hours);
 
         return $query->addSelect([
             'uptime_total_24h' => Check::query()
