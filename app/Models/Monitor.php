@@ -39,7 +39,7 @@ class Monitor extends Model
     {
         return $query->where(function (Builder $q) {
             $q->whereNull('last_checked_at')
-                ->orWhereRaw('DATE_ADD(last_checked_at, INTERVAL check_interval MINUTE) <= NOW()');
+                ->orWhereRaw('last_checked_at <= DATE_SUB(NOW(), INTERVAL check_interval MINUTE)');
         });
     }
 
@@ -78,7 +78,9 @@ class Monitor extends Model
     {
         $total = (int) ($this->attributes['uptime_total_24h'] ?? 0);
 
-        if ($total === 0) return null;
+        if ($total === 0) {
+            return null;
+        }
 
         $ups = (int) ($this->attributes['uptime_ups_24h'] ?? 0);
 

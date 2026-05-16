@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Requests\StoreMonitorRequest;
-use App\Http\Resources\CheckResource;
-use App\Http\Resources\MonitorResource;
 use App\Models\Monitor;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -56,7 +55,7 @@ class MonitorController extends BaseApiController
      */
     public function history(Request $request, int $id): JsonResponse
     {
-        $monitor = Monitor::find($id); //Route model binding wasn't used as per spec
+        $monitor = Monitor::find($id); // Route model binding wasn't used as per spec
 
         if (! $monitor) {
             return response()->json([

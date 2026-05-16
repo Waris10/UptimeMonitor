@@ -42,19 +42,19 @@ class StoreMonitorRequest extends FormRequest
                 'required',
                 'string',
                 'url:http,https',
-                'max:' . config('monitoring.limits.url_max_length'),
+                'max:'.config('monitoring.limits.url_max_length'),
                 Rule::unique('monitors', 'url'),
             ],
             'check_interval' => [
                 'sometimes',
                 'integer',
-                'min:' . config('monitoring.limits.check_interval_min'),
-                'max:' . config('monitoring.limits.check_interval_max'),
+                'min:'.config('monitoring.limits.check_interval_min'),
+                'max:'.config('monitoring.limits.check_interval_max'),
             ],
             'threshold' => [
                 'sometimes',
                 'integer',
-                'min:' . config('monitoring.limits.threshold_min'),
+                'min:'.config('monitoring.limits.threshold_min'),
             ],
         ];
     }

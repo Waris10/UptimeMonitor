@@ -15,7 +15,6 @@ class NotificationDispatcher
      */
     public function __construct() {}
 
-
     public function dispatch(Monitor $monitor, StatusTransitionEnum $transition): void
     {
         $recipient = config('monitoring.notifications.recipient');
