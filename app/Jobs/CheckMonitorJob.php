@@ -2,9 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Enums\MonitorStatus;
 use App\Enums\MonitorStatusEnum;
-use App\Enums\StatusTransition;
 use App\Enums\StatusTransitionEnum;
 use App\Models\Monitor;
 use App\Services\NotificationDispatcher;
@@ -21,13 +19,14 @@ use Throwable;
 
 class CheckMonitorJob implements ShouldQueue
 {
-    use Queueable, Dispatchable, InteractsWithQueue, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Do not retry — a failed probe is a real data point, not a transient
      * job error. Threshold semantics handle "is it really down".
      */
     public int $tries = 1;
+
     /**
      * Create a new job instance.
      */
@@ -38,9 +37,11 @@ class CheckMonitorJob implements ShouldQueue
      */
     public function handle(UptimeChecker $checker, StatusEvaluator $evaluator, NotificationDispatcher $dispatcher): void
     {
-        $monitor = Monitor::find($this->monitorId); //I didn't pass the model from the caller to always get a clean and fresh state anytime the concerned monitor is called
+        $monitor = Monitor::find($this->monitorId); // I didn't pass the model from the caller to always get a clean and fresh state anytime the concerned monitor is called
 
-        if (! $monitor) return;
+        if (! $monitor) {
+            return;
+        }
 
         $check = $checker->probe($monitor);
 

@@ -26,7 +26,7 @@ class MonitorWentDownMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '[Uptime] {$this->monitor->url} is down',
+            subject: "[Uptime] {$this->monitor->url} is down",
         );
     }
 
@@ -39,7 +39,8 @@ class MonitorWentDownMail extends Mailable implements ShouldQueue
             view: 'mail.monitor-went-down-mail',
             with: [
                 'url' => $this->monitor->url,
-                'recoveredAt' => $this->monitor->last_checked_at,
+                'consecutiveFailures' => $this->monitor->consecutive_failures,
+                'detectedAt' => $this->monitor->last_checked_at,
             ],
         );
     }

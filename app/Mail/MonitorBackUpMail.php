@@ -26,7 +26,7 @@ class MonitorBackUpMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '[Uptime] {$this->monitor->url} is back up',
+            subject: "[Uptime] {$this->monitor->url} is back up",
         );
     }
 
